@@ -1,0 +1,62 @@
+/* src/styles/Hero.css */
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Makes the hero section take up the full screen height */
+  text-align: center;
+  color: white;
+  background: #0f0c29; /* A dark background to make the glow pop */
+}
+
+.hero-title {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  color: #c3c3c3;
+}
+
+/* Glowing Text Effect */
+.glowing-text {
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+    0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+}
+
+/* Glowing Button Effect */
+.hero-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite; /* Pulsing animation */
+}
+
+.hero-button:hover {
+  background-color: #0fa;
+  box-shadow: 0 0 5px #0fa, 0 0 25px #0fa, 0 0 50px #0fa, 0 0 100px #0fa;
+  animation: none; /* Stop pulsing on hover for a solid glow */
+}
+
+/* Keyframes for the pulsing animation on the button */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 5px #0fa, 0 0 10px #0fa;
+  }
+  50% {
+    box-shadow: 0 0 20px #0fa, 0 0 50px #0fa;
+  }
+  100% {
+    box-shadow: 0 0 5px #0fa, 0 0 10px #0fa;
+  }
+}

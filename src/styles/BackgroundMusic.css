@@ -1,0 +1,20 @@
+.music-toggle-button {
+  position: fixed;
+  bottom: 20px; /* space from bottom */
+  right: 20px;  /* change to `left: 20px;` if you want left */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #fff;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 9999;
+  color: white;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.music-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.8);
+  transform: scale(1.1);
+}

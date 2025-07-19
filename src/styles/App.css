@@ -1,0 +1,101 @@
+body {
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #f1f1f1;
+  background-color: #000;
+  margin: 0;
+}
+
+
+h1 {
+  font-size: 2.8rem;
+  color: #d0faff;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-shadow:
+    0 0 10px rgba(0, 229, 255, 0.3),
+    0 0 20px rgba(0, 229, 255, 0.1);
+  letter-spacing: 2px;
+  backdrop-filter: blur(2px);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical centering */
+  align-items: center;     /* horizontal centering */
+  position: relative;
+  padding-bottom: 0; /* so Dock doesn't overlap content */
+}
+
+
+.quote-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 250px;
+}
+
+.quote {
+  font-size: 1.4rem;
+  color: #f1f1f1;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.author {
+  font-size: 1.1rem;
+  color: #a0d9ff;
+  text-align: center;
+}
+
+
+.loading {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+button {
+  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
+  border: 1px solid #3a3a3a;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,229,255, 0.4);
+}
+
+button:hover {
+  background: linear-gradient(145deg, #111, #333);
+  box-shadow: 0 0 20px rgba(0,229,255, 0.6);
+}
+
+.card-spotlight {
+  background-color: rgba(17, 17, 17, 0.85); /* dark + transparent */
+  color: #fff;
+}
+
+.quote {
+  color: #f0f0f0;
+}
+
+.author {
+  color: #a8dadc;
+}
+
+textarea {
+  width: 80%;
+  height: 200px;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #444;
+  background-color: #111;
+  color: white;
+  resize: none;
+}

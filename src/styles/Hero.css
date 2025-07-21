@@ -1,62 +1,342 @@
-/* src/styles/Hero.css */
-.hero-container {
+/* Hero.css - Animated hero section with flowing gradients */
+
+.hero {
+  min-height: 100vh;
+  background: #0a0a12;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh; /* Makes the hero section take up the full screen height */
-  text-align: center;
-  color: white;
-  background: #0f0c29; /* A dark background to make the glow pop */
+  padding-top: 80px;
 }
 
-.hero-title {
-  font-size: 4rem;
-  margin-bottom: 0.5rem;
+.hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
 }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin-bottom: 2rem;
-  color: #c3c3c3;
+/* Animated Background Elements */
+.hero__decoration {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
-/* Glowing Text Effect */
-.glowing-text {
-  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
-    0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+.hero__flow-line {
+  position: absolute;
+  width: 400px;
+  height: 2px;
+  border-radius: 1px;
+  opacity: 0.6;
+  animation: flow 15s ease-in-out infinite;
 }
 
-/* Glowing Button Effect */
-.hero-button {
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: pulse 2s infinite; /* Pulsing animation */
+.hero__flow-line--1 {
+  background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+  top: 20%;
+  left: -200px;
+  animation-delay: 0s;
+  transform: rotate(15deg);
 }
 
-.hero-button:hover {
-  background-color: #0fa;
-  box-shadow: 0 0 5px #0fa, 0 0 25px #0fa, 0 0 50px #0fa, 0 0 100px #0fa;
-  animation: none; /* Stop pulsing on hover for a solid glow */
+.hero__flow-line--2 {
+  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+  top: 60%;
+  right: -200px;
+  animation-delay: -5s;
+  transform: rotate(-15deg);
 }
 
-/* Keyframes for the pulsing animation on the button */
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 5px #0fa, 0 0 10px #0fa;
+.hero__flow-line--3 {
+  background: linear-gradient(90deg, transparent, #ec4899, transparent);
+  top: 40%;
+  left: -200px;
+  animation-delay: -10s;
+  transform: rotate(25deg);
+}
+
+@keyframes flow {
+  0%, 100% {
+    transform: translateX(0) rotate(var(--rotate, 15deg));
+    opacity: 0;
   }
   50% {
-    box-shadow: 0 0 20px #0fa, 0 0 50px #0fa;
+    transform: translateX(800px) rotate(var(--rotate, 15deg));
+    opacity: 0.6;
   }
-  100% {
-    box-shadow: 0 0 5px #0fa, 0 0 10px #0fa;
+}
+
+.hero__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+.hero__glow--purple {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.hero__glow--cyan {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #06b6d4, transparent 70%);
+  bottom: 10%;
+  left: 5%;
+  animation-delay: -3s;
+}
+
+.hero__glow--pink {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #ec4899, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -6s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}
+
+/* Main Content */
+.hero__content {
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+
+.hero__title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 2rem 0;
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hero__title-line {
+  display: block;
+  opacity: 0;
+  animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.hero__title-line:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.hero__title-line:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.hero__title-line:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero__title--gradient-primary {
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.hero__title--gradient-secondary {
+  background: linear-gradient(135deg, #06b6d4, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero__title--white {
+  color: #ffffff;
+}
+
+.hero__subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  line-height: 1.6;
+  opacity: 0;
+  animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+}
+
+.hero__cta {
+  opacity: 0;
+  animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+}
+
+.hero__button {
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 16px;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero__button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #7c3aed, #0891b2);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero__button:hover::before {
+  opacity: 1;
+}
+
+.hero__button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+}
+
+.hero__button span {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__button-arrow {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.hero__button:hover .hero__button-arrow {
+  transform: translateX(6px);
+}
+
+/* Floating Elements */
+.hero__floating-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-element {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.floating-element--1 {
+  width: 80px;
+  height: 80px;
+  top: 15%;
+  left: 10%;
+  animation: float 20s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+}
+
+.floating-element--2 {
+  width: 120px;
+  height: 60px;
+  top: 70%;
+  right: 15%;
+  animation: float 25s ease-in-out infinite reverse;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(236, 72, 153, 0.1));
+}
+
+.floating-element--3 {
+  width: 100px;
+  height: 100px;
+  top: 30%;
+  right: 25%;
+  animation: float 30s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
+}
+
+.floating-element--4 {
+  width: 60px;
+  height: 120px;
+  bottom: 20%;
+  left: 20%;
+  animation: float 22s ease-in-out infinite reverse;
+}
+
+.floating-element--5 {
+  width: 90px;
+  height: 90px;
+  top: 50%;
+  left: 5%;
+  animation: float 28s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-3deg);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .hero__container {
+    padding: 1rem;
+  }
+  
+  .hero__title {
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero__subtitle {
+    margin-bottom: 2rem;
+  }
+  
+  .hero__button {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+  
+  .floating-element {
+    display: none;
   }
 }

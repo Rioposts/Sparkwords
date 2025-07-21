@@ -1,0 +1,86 @@
+.how-it-works {
+  padding: 100px 2rem;
+  background-color: #050509;
+}
+
+.how-it-works__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.how-it-works__header {
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.how-it-works__header.how-it-works--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.how-it-works__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.how-it-works__subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.how-it-works__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.how-it-works__step {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  /* Updated transition to be smoother for all properties */
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.how-it-works__step.how-it-works--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- NEW HOVER EFFECT --- */
+.how-it-works__step:hover {
+  transform: translateY(-8px); /* Lifts the card up slightly */
+  border-color: rgba(139, 92, 246, 0.5); /* Adds a purple border highlight */
+  background: linear-gradient(145deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.02)); /* Adds a subtle gradient background */
+}
+/* --- END OF NEW HOVER EFFECT --- */
+
+
+.how-it-works__step-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin-bottom: 1rem;
+}
+
+.how-it-works__step-title {
+  font-size: 1.25rem;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.how-it-works__step-description {
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}

@@ -1,0 +1,306 @@
+/* Features.css - Glassmorphism feature cards with animations */
+
+.features {
+  background: #0a0a12;
+  padding: 8rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.features__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Background decoration */
+.features__background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.features__bg-glow {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.15;
+}
+
+.features__bg-glow--left {
+  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+  top: 50%;
+  left: -400px;
+  transform: translateY(-50%);
+  animation: breathe 12s ease-in-out infinite;
+}
+
+.features__bg-glow--right {
+  background: radial-gradient(circle, #06b6d4, transparent 70%);
+  top: 50%;
+  right: -400px;
+  transform: translateY(-50%);
+  animation: breathe 12s ease-in-out infinite reverse;
+  animation-delay: -6s;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.1;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+/* Section header */
+.features__header {
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.features__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.features__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1.5rem 0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.features__title--highlight {
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.features__subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Feature cards grid */
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.features__card {
+  position: relative;
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.features__card--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.features__card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Card glow effect */
+.features__card-glow {
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient);
+  border-radius: 26px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.features__card:hover .features__card-glow {
+  opacity: 0.8;
+}
+
+/* Card background with glassmorphism */
+.features__card-background {
+  position: absolute;
+  inset: 2px;
+  background: rgba(10, 10, 18, 0.9);
+  border-radius: 22px;
+  backdrop-filter: blur(20px);
+}
+
+.features__card-content {
+  position: relative;
+  z-index: 3;
+}
+
+.features__card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.features__card-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient);
+  filter: blur(20px);
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.features__card:hover .features__card-icon::before {
+  opacity: 0.6;
+}
+
+.features__card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.features__card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.01em;
+}
+
+.features__card-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Hover overlay */
+.features__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, var(--glow-color), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+.features__card:hover .features__card-overlay {
+  opacity: 1;
+}
+
+/* Card-specific animations */
+.features__card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.features__card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.features__card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Floating particles effect */
+.features__card::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, var(--glow-color), transparent 70%);
+  border-radius: 50%;
+  top: -50px;
+  right: -50px;
+  filter: blur(30px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.features__card:hover::after {
+  opacity: 0.4;
+  transform: translate(-20px, 20px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .features {
+    padding: 4rem 0;
+  }
+
+  .features__container {
+    padding: 0 1rem;
+  }
+
+  .features__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .features__card {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+  .features__card-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .features__card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .features__header {
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .features__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .features__card {
+    padding: 1.5rem;
+  }
+}

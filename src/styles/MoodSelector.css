@@ -1,0 +1,192 @@
+.mood-selector {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.mood-title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.mood-button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.2rem;
+  padding: 1.8rem 1rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--mood-glow);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 0;
+}
+
+.mood-button:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.mood-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--mood-color);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.4),
+    0 0 25px var(--mood-glow);
+}
+
+.mood-button.selected {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--mood-color);
+  box-shadow: 
+    0 0 30px var(--mood-glow),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.mood-button.selected::before {
+  width: 150px;
+  height: 150px;
+}
+
+/* Enhanced Icon Styling */
+.mood-icon {
+  display: block;
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  color: var(--mood-color);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 8px var(--mood-glow));
+}
+
+.mood-button:hover .mood-icon {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 0 15px var(--mood-glow));
+  color: white;
+}
+
+.mood-button.selected .mood-icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 20px var(--mood-glow));
+  color: white;
+}
+
+.mood-name {
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.mood-button:hover .mood-name {
+  color: white;
+  text-shadow: 0 0 12px var(--mood-glow);
+  transform: translateY(-2px);
+}
+
+.mood-button.selected .mood-name {
+  color: white;
+  text-shadow: 0 0 15px var(--mood-glow);
+}
+
+/* Pulse animation for selected state */
+.mood-button.selected {
+  animation: selectedPulse 2s ease-in-out infinite;
+}
+
+@keyframes selectedPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px var(--mood-glow),
+      0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 35px var(--mood-glow),
+      0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Active state animation */
+.mood-button:active {
+  transform: translateY(-2px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .mood-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .mood-button {
+    padding: 1.5rem 0.8rem;
+  }
+  
+  .mood-icon {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .mood-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-selector {
+    padding: 1.5rem;
+  }
+  
+  .mood-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mood-grid {
+    gap: 0.8rem;
+  }
+  
+  .mood-button {
+    padding: 1.2rem 0.6rem;
+  }
+  
+  .mood-icon {
+    font-size: 1.8rem;
+  }
+}

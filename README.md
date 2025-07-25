@@ -4,7 +4,9 @@
 
 SparkWords is a beautifully designed mental wellness web application that provides users with a private, glassmorphic interface to improve their mental clarity through three core features: daily inspiration, emotional release, and guided self-reflection.
 
-![SparkWords Preview](https://via.placeholder.com/800x400?text=SparkWords+App+Screenshot)
+![SparkWords Hero](./screenshots/home.PNG)
+![SparkWords Features](./screenshots/features.PNG)
+
 
 ## 🌟 Features
 

@@ -1,10 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "../styles/ReflectBox.css";
 
-// Receive the userId prop from App.jsx
 export default function ReflectBox({ userId }) {
   const [input, setInput] = useState("");
   const [reflections, setReflections] = useState([]);
+
+  // Helper function to normalize reflection entries
+  const normalizeReflection = (reflection, index) => {
+    // If reflection is already in the new format, return as-is
+    if (reflection && typeof reflection === 'object' && reflection.id && reflection.text && reflection.date) {
+      return reflection;
+    }
+    
+    // Handle old format - simple string entries
+    if (typeof reflection === 'string') {
+      return {
+        id: Date.now() + index, // Ensure unique ID
+        text: reflection,
+        date: new Date().toLocaleString()
+      };
+    }
+    
+    // Handle partial objects (old format with some properties)
+    if (reflection && typeof reflection === 'object') {
+      return {
+        id: reflection.id || Date.now() + index,
+        text: reflection.text || reflection.content || 'No content',
+        date: reflection.date || new Date().toLocaleString()
+      };
+    }
+    
+    // Fallback for any other format
+    return {
+      id: Date.now() + index,
+      text: 'Invalid reflection format',
+      date: new Date().toLocaleString()
+    };
+  };
 
   // Load reflections when the component mounts or userId changes
   useEffect(() => {
@@ -14,16 +46,32 @@ export default function ReflectBox({ userId }) {
     
     try {
       const saved = localStorage.getItem(storageKey);
-      setReflections(saved ? JSON.parse(saved) : []);
+      if (saved) {
+        const parsedReflections = JSON.parse(saved);
+        // Normalize all reflections to ensure backwards compatibility
+        const normalizedReflections = Array.isArray(parsedReflections) 
+          ? parsedReflections.map(normalizeReflection)
+          : [];
+        setReflections(normalizedReflections);
+        
+        // Save the normalized reflections back to localStorage to prevent future issues
+        if (normalizedReflections.length > 0) {
+          localStorage.setItem(storageKey, JSON.stringify(normalizedReflections));
+        }
+      } else {
+        setReflections([]);
+      }
     } catch (error) {
       console.error("Failed to parse reflections:", error);
       setReflections([]);
+      // Clear corrupted data
+      localStorage.removeItem(storageKey);
     }
   }, [userId]);
 
   // Save reflections whenever they change
   useEffect(() => {
-    if (!userId) return; // Don't save if there's no user ID
+    if (!userId) return;
     
     // Only save if there's something to save, to avoid writing empty arrays on first load
     if (reflections && reflections.length > 0) {
@@ -35,6 +83,7 @@ export default function ReflectBox({ userId }) {
   const handleAdd = () => {
     const trimmed = input.trim();
     if (!trimmed) return;
+    
     const newEntry = {
       text: trimmed,
       date: new Date().toLocaleString(),
@@ -74,21 +123,24 @@ export default function ReflectBox({ userId }) {
           {reflections.length === 0 ? (
             <p className="reflect-empty">No reflections yet. Start your first one!</p>
           ) : (
-            reflections.map((r) => (
-              <div key={r.id} className="reflect-entry">
-                {/* --- THE BUG FIX IS HERE --- */}
-                {/* This check handles both old and new entry formats */}
-                <div className="reflect-date">{r.date || new Date().toLocaleString()}</div>
-                <div className="reflect-text">{typeof r === 'object' ? r.text : r}</div>
-                <button
-                  onClick={() => handleDelete(r.id)}
-                  className="reflect-delete-btn"
-                  aria-label="Delete reflection"
-                >
-                  Delete
-                </button>
-              </div>
-            ))
+            reflections.map((r) => {
+              // Additional safety checks for rendering
+              const safeReflection = normalizeReflection(r, 0);
+              
+              return (
+                <div key={safeReflection.id} className="reflect-entry">
+                  <div className="reflect-date">{safeReflection.date}</div>
+                  <div className="reflect-text">{safeReflection.text}</div>
+                  <button
+                    onClick={() => handleDelete(safeReflection.id)}
+                    className="reflect-delete-btn"
+                    aria-label="Delete reflection"
+                  >
+                    Delete
+                  </button>
+                </div>
+              );
+            })
           )}
         </div>
       </div>

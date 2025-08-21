@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { IoSparklesOutline, IoJournalOutline, IoSearchOutline, IoMenuOutline, IoClose } from "react-icons/io5";
+import {IoHomeOutline, IoSparklesOutline, IoJournalOutline, IoSearchOutline, IoMenuOutline, IoClose } from "react-icons/io5";
 import '../styles/SidePanel.css';
 
 const SidePanel = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const items = [
+    { icon: <IoHomeOutline />, label: "Home", page: "home", color: "#f59e42" },
     { icon: <IoSparklesOutline />, label: "Spark", page: "spark", color: "#8b5cf6" },
     { icon: <IoJournalOutline />, label: "Vent", page: "vent", color: "#ec4899" },
     { icon: <IoSearchOutline />, label: "Reflect", page: "reflect", color: "#10b981" },

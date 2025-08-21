@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SpotlightCard from './SpotlightCard'; // Add this import
+import SpotlightCard from './SpotlightCard'; 
 
 const Quotebox = () => {
   const [quote, setQuote] = useState("Every moment is a fresh beginning. Your SparkWords journey starts now.");
@@ -50,7 +50,7 @@ const Quotebox = () => {
         <p className="quotebox-subtitle">Daily inspiration to ignite your motivation</p>
       </div>
 
-      {/* Replace quote-card div with SpotlightCard */}
+    
       <SpotlightCard 
         className="quote-card-spotlight" 
         spotlightColor="rgba(0, 229, 255, 0.25)"

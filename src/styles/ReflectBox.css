@@ -1,0 +1,139 @@
+.reflect-container {
+  min-height: 100vh;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reflect-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.reflect-title {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.reflect-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+}
+
+.reflect-textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  resize: vertical;
+  transition: border 0.2s;
+}
+
+.reflect-textarea:focus {
+  outline: none;
+  border: 1.5px solid #8b5cf6;
+}
+
+.reflect-add-btn {
+  width: 100%;
+  padding: 0.7rem 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #06b6d4 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.reflect-add-btn:hover {
+  background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.reflect-entries {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.reflect-empty {
+  color: #bbb;
+  font-size: 1.1rem;
+}
+
+.reflect-entry {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(60,68,154,.06);
+  text-align: left;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+
+.reflect-entry:hover {
+  box-shadow: 0 4px 16px rgba(60,68,154,.12);
+}
+
+.reflect-date {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.4rem;
+}
+
+.reflect-text {
+  margin: 0.5rem 0 0.7rem 0;
+  font-weight: 500;
+  color: #fff;
+  word-break: break-word;
+}
+
+.reflect-delete-btn {
+  background: none;
+  border: none;
+  color: #ec4899;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  opacity: 0.8;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.reflect-delete-btn:hover {
+  color: #c026d3;
+  opacity: 1;
+}
+.reflect-glass {
+  background: rgba(30, 41, 59, 0.45); /* semi-transparent dark */
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 2.5rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.reflect-glass .reflect-textarea,
+.reflect-glass .reflect-add-btn {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+}

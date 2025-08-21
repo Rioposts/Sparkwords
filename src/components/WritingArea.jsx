@@ -5,13 +5,14 @@ const WritingArea = ({ selectedMood, onSaveEntry, onChangeMood }) => {
   const [content, setContent] = useState('');
   const [wordCount, setWordCount] = useState(0);
 
+  // better prompts for more comforing space for the user 
   const prompts = {
-    happy: "What brought joy to your day? Share what's making you smile...",
-    sad: "It's okay to feel sad. What's on your heart right now?",
-    anxious: "Take a deep breath. What thoughts are racing through your mind?",
-    angry: "Let it out safely here. What's frustrating you today?",
-    stressed: "You're in a safe space. What's overwhelming you right now?",
-    peaceful: "Enjoy this calm moment. What are you grateful for today?"
+    happy: "That's wonderful! What's bringing you joy today?",
+    sad: "It's okay to feel this way. Take your time and write what's on your mind.",
+    anxious: "Let's work through this. What thoughts are causing you anxiety right now?",
+    angry: "This is a safe space to let it out. What's frustrating you?",
+    stressed: "Feeling overwhelmed is tough. What's contributing to your stress today?",
+    peaceful: "Embrace this calm. What are you feeling grateful for in this moment?"
   };
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const WritingArea = ({ selectedMood, onSaveEntry, onChangeMood }) => {
         </button>
         
         <button 
-          className="save-button" 
+          className="save-button"
           onClick={handleSave}
           disabled={content.trim().length === 0}
         >

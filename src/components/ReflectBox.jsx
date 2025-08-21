@@ -6,9 +6,8 @@ export default function ReflectBox({ userId }) {
   const [input, setInput] = useState("");
   const [reflections, setReflections] = useState([]);
 
-  // This useEffect loads reflections when the component mounts or userId changes
+  // Load reflections when the component mounts or userId changes
   useEffect(() => {
-    // Wait until the userId is available
     if (!userId) return;
     
     const storageKey = `reflections_${userId}`;
@@ -18,17 +17,20 @@ export default function ReflectBox({ userId }) {
       setReflections(saved ? JSON.parse(saved) : []);
     } catch (error) {
       console.error("Failed to parse reflections:", error);
-      setReflections([]); // Default to empty array on error
+      setReflections([]);
     }
-  }, [userId]); // Add userId to dependency array
+  }, [userId]);
 
-  // This useEffect saves reflections whenever they change
+  // Save reflections whenever they change
   useEffect(() => {
-    if (!userId || reflections.length === 0) return;
+    if (!userId) return; // Don't save if there's no user ID
     
-    const storageKey = `reflections_${userId}`;
-    localStorage.setItem(storageKey, JSON.stringify(reflections));
-  }, [reflections, userId]); // Add userId to dependency array
+    // Only save if there's something to save, to avoid writing empty arrays on first load
+    if (reflections && reflections.length > 0) {
+      const storageKey = `reflections_${userId}`;
+      localStorage.setItem(storageKey, JSON.stringify(reflections));
+    }
+  }, [reflections, userId]);
 
   const handleAdd = () => {
     const trimmed = input.trim();
@@ -74,8 +76,10 @@ export default function ReflectBox({ userId }) {
           ) : (
             reflections.map((r) => (
               <div key={r.id} className="reflect-entry">
-                <div className="reflect-date">{r.date}</div>
-                <div className="reflect-text">{r.text}</div>
+                {/* --- THE BUG FIX IS HERE --- */}
+                {/* This check handles both old and new entry formats */}
+                <div className="reflect-date">{r.date || new Date().toLocaleString()}</div>
+                <div className="reflect-text">{typeof r === 'object' ? r.text : r}</div>
                 <button
                   onClick={() => handleDelete(r.id)}
                   className="reflect-delete-btn"

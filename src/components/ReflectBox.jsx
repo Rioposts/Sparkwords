@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from "react";
 import "../styles/ReflectBox.css";
 
-function loadReflections() {
-  try {
-    const saved = JSON.parse(localStorage.getItem("reflections") || "[]");
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    return [];
-  }
-}
-
-export default function ReflectBox() {
+// Receive the userId prop from App.jsx
+export default function ReflectBox({ userId }) {
   const [input, setInput] = useState("");
   const [reflections, setReflections] = useState([]);
 
+  // This useEffect loads reflections when the component mounts or userId changes
   useEffect(() => {
-    setReflections(loadReflections());
-  }, []);
+    // Wait until the userId is available
+    if (!userId) return;
+    
+    const storageKey = `reflections_${userId}`;
+    
+    try {
+      const saved = localStorage.getItem(storageKey);
+      setReflections(saved ? JSON.parse(saved) : []);
+    } catch (error) {
+      console.error("Failed to parse reflections:", error);
+      setReflections([]); // Default to empty array on error
+    }
+  }, [userId]); // Add userId to dependency array
 
+  // This useEffect saves reflections whenever they change
   useEffect(() => {
-    localStorage.setItem("reflections", JSON.stringify(reflections));
-  }, [reflections]);
+    if (!userId || reflections.length === 0) return;
+    
+    const storageKey = `reflections_${userId}`;
+    localStorage.setItem(storageKey, JSON.stringify(reflections));
+  }, [reflections, userId]); // Add userId to dependency array
 
   const handleAdd = () => {
     const trimmed = input.trim();
@@ -38,7 +46,7 @@ export default function ReflectBox() {
     setReflections(reflections.filter((r) => r.id !== id));
   };
 
-return (
+  return (
     <div className="reflect-container">
       <div className="reflect-header">
         <h2 className="reflect-title">Reflect</h2>

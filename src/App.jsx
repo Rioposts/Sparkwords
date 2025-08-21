@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import QuoteBox from "./components/Quotebox";
 import VentBox from "./components/VentBox";
 import ReflectBox from "./components/ReflectBox";
-import SidePanel from "./components/SidePanel"; // CHANGE THIS LINE
+import SidePanel from "./components/SidePanel";
 import BackgroundMusic from "./components/BackgroundMusic";
 import Particles from "./components/Particles";
 import FeatureSelector from "./components/FeatureSelector";
@@ -13,6 +13,20 @@ function App() {
   const [page, setPage] = useState("home");
   const [showFeatureSelector, setShowFeatureSelector] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // State to hold the unique user ID 
+  const [userId, setUserId] = useState(null);
+
+  // useEffect to create and manage the user ID 
+  useEffect(() => {
+    let currentUserId = localStorage.getItem('sparkwordsUserId');
+    if (!currentUserId) {
+      // If no ID exists, create a new unique one and store it
+      currentUserId = `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      localStorage.setItem('sparkwordsUserId', currentUserId);
+    }
+    setUserId(currentUserId);
+  }, []); // The empty array [] means this effect runs only once when the app first loads
 
   const handlePageChange = (newPage) => {
     if (newPage === page) return;
@@ -29,8 +43,10 @@ function App() {
   const renderPage = () => {
     if (page === "home") return <Home setPage={handlePageChange} setShowFeatureSelector={setShowFeatureSelector} />;
     if (page === "spark") return <QuoteBox />;
-    if (page === "vent") return <VentBox />;
-    if (page === "reflect") return <ReflectBox />;
+    
+    // Pass the userId to VentBox and ReflectBox
+    if (page === "vent") return <VentBox userId={userId} />;
+    if (page === "reflect") return <ReflectBox userId={userId} />;
   };
 
   const getPageDisplayName = (pageName) => {
@@ -50,7 +66,8 @@ function App() {
       
       {renderPage()}
       
-      {page !== 'home' && <SidePanel onNavigate={handlePageChange} />} {/* CHANGE THIS LINE */}
+      {/*  The SidePanel here is for navigation */}
+      {page !== 'home' && <SidePanel onNavigate={handlePageChange} />}
       
       <FeatureSelector 
         isOpen={showFeatureSelector}
@@ -58,7 +75,6 @@ function App() {
         setPage={handlePageChange}
       />
 
-      {/* Keep your loading transitions */}
       {isTransitioning && (
         <div className="page-transition-overlay">
           <div className="transition-content">

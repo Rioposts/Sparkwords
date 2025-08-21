@@ -3,34 +3,36 @@ import MoodSelector from './MoodSelector';
 import WritingArea from './WritingArea';
 import '../styles/VentBox.css';
 
-const VentBox = () => {
+// Receive the userId prop from App.jsx
+const VentBox = ({ userId }) => { 
   const [currentStep, setCurrentStep] = useState('mood');
   const [selectedMood, setSelectedMood] = useState(null);
   const [entries, setEntries] = useState([]);
 
-  // Generate unique user ID for privacy
-  const getUserId = () => {
-    let userId = localStorage.getItem('sparkwords_user_id');
-    if (!userId) {
-      userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem('sparkwords_user_id', userId);
-    }
-    return userId;
-  };
-
   // Load entries and persistent state from localStorage on component mount
   useEffect(() => {
-    const userId = getUserId();
+    // Wait until the userId is available before trying to load data
+    if (!userId) return; 
     
-    // Load entries
-    const savedEntries = localStorage.getItem(`ventEntries_${userId}`);
-    if (savedEntries) {
-      setEntries(JSON.parse(savedEntries));
+    // Use the userId from props to create user-specific storage keys
+    const savedEntriesKey = `ventEntries_${userId}`;
+    const savedStepKey = `vent_current_step_${userId}`;
+    const savedMoodKey = `vent_selected_mood_${userId}`;
+
+    // Safely load entries
+    try {
+      const savedEntries = localStorage.getItem(savedEntriesKey);
+      if (savedEntries) {
+        setEntries(JSON.parse(savedEntries));
+      }
+    } catch (e) {
+      console.error("Failed to parse vent entries:", e);
+      setEntries([]); // Default to empty array on error
     }
     
     // Load persistent state
-    const savedStep = localStorage.getItem(`vent_current_step_${userId}`);
-    const savedMood = localStorage.getItem(`vent_selected_mood_${userId}`);
+    const savedStep = localStorage.getItem(savedStepKey);
+    const savedMood = localStorage.getItem(savedMoodKey);
     
     if (savedStep && savedStep !== 'mood') {
       setCurrentStep(savedStep);
@@ -39,23 +41,24 @@ const VentBox = () => {
       try {
         setSelectedMood(JSON.parse(savedMood));
       } catch (e) {
-        console.log('Could not parse saved mood, resetting to null');
+        console.error('Could not parse saved mood, resetting to null');
       }
     }
-  }, []);
+    // Add userId to the dependency array, so this runs when the ID is ready
+  }, [userId]); 
 
   // Save persistent state when it changes
   useEffect(() => {
-    const userId = getUserId();
+    if (!userId) return;
     localStorage.setItem(`vent_current_step_${userId}`, currentStep);
-  }, [currentStep]);
+  }, [currentStep, userId]);
 
   useEffect(() => {
-    const userId = getUserId();
+    if (!userId) return;
     if (selectedMood) {
       localStorage.setItem(`vent_selected_mood_${userId}`, JSON.stringify(selectedMood));
     }
-  }, [selectedMood]);
+  }, [selectedMood, userId]);
 
   const handleMoodSelect = (mood) => {
     setSelectedMood(mood);
@@ -63,7 +66,7 @@ const VentBox = () => {
   };
 
   const handleSaveEntry = (entry) => {
-    const userId = getUserId();
+    if (!userId) return;
     const updatedEntries = [entry, ...entries];
     setEntries(updatedEntries);
     localStorage.setItem(`ventEntries_${userId}`, JSON.stringify(updatedEntries));
@@ -72,22 +75,21 @@ const VentBox = () => {
     localStorage.removeItem(`vent_current_step_${userId}`);
     localStorage.removeItem(`vent_selected_mood_${userId}`);
     
-    alert('Entry saved successfully!');
+    //  im gonna use a modern notification system later
+    console.log('Entry saved successfully!'); 
     setCurrentStep('mood');
     setSelectedMood(null);
   };
 
   const handleChangeMood = () => {
-    const userId = getUserId();
-    // Clear the persistent mood but keep the step change
+    if (!userId) return;
     localStorage.removeItem(`vent_selected_mood_${userId}`);
     setCurrentStep('mood');
     setSelectedMood(null);
   };
 
   const handleNewEntry = () => {
-    const userId = getUserId();
-    // Clear all persistent state when starting fresh
+    if (!userId) return;
     localStorage.removeItem(`vent_current_step_${userId}`);
     localStorage.removeItem(`vent_selected_mood_${userId}`);
     setCurrentStep('mood');
@@ -96,7 +98,7 @@ const VentBox = () => {
 
   return (
     <div className="vent-container">
-      <div className="vent-header">
+       <div className="vent-header">
         <h1 className="vent-title">Vent</h1>
         <p className="vent-subtitle">Your private space to release and reflect</p>
       </div>

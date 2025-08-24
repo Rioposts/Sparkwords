@@ -4,20 +4,19 @@ import "../styles/ReflectBox.css";
 export default function ReflectBox({ userId }) {
   const [input, setInput] = useState("");
   const [reflections, setReflections] = useState([]);
+  const [currentStep, setCurrentStep] = useState('list'); // 'list' or 'writing'
 
   // --- THE PERMANENT FIX: A Robust Normalizer Function ---
   const normalizeReflection = (reflection, index) => {
     if (!reflection) return null;
 
-    // If it's already a modern entry object
     if (typeof reflection === 'object' && reflection.id && reflection.text && reflection.date) {
       return reflection;
     }
 
-    // This handles old entries that might be just strings
     return {
       id: reflection.id || Date.now() + index,
-      text: reflection.text || String(reflection), // Safely get the text
+      text: reflection.text || String(reflection),
       date: reflection.date || new Date().toLocaleString(),
     };
   };
@@ -31,7 +30,6 @@ export default function ReflectBox({ userId }) {
       const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Normalize every reflection to handle old data formats
         const normalizedReflections = Array.isArray(parsed) ? parsed.map(normalizeReflection).filter(Boolean) : [];
         setReflections(normalizedReflections);
       }
@@ -43,8 +41,11 @@ export default function ReflectBox({ userId }) {
   }, [userId]);
 
   useEffect(() => {
-    if (!userId || reflections.length === 0) return;
-    localStorage.setItem(`reflections_${userId}`, JSON.stringify(reflections));
+    if (!userId) return;
+    // Do not save an empty array on initial load if there's nothing there.
+    if (reflections.length > 0) {
+        localStorage.setItem(`reflections_${userId}`, JSON.stringify(reflections));
+    }
   }, [reflections, userId]);
 
   const handleAdd = () => {
@@ -57,11 +58,26 @@ export default function ReflectBox({ userId }) {
     };
     setReflections([newEntry, ...reflections]);
     setInput("");
+    setCurrentStep('list'); // Go back to the list after adding
   };
 
   const handleDelete = (id) => {
-    setReflections(reflections.filter((r) => r.id !== id));
+    const updatedReflections = reflections.filter((r) => r.id !== id);
+    setReflections(updatedReflections);
+    // If all reflections are deleted, remove the item from local storage
+    if (updatedReflections.length === 0) {
+        localStorage.removeItem(`reflections_${userId}`);
+    }
   };
+
+  const handleNewEntryClick = () => {
+    setCurrentStep('writing');
+  };
+
+  const handleBackClick = () => {
+    setCurrentStep('list');
+  };
+
 
   return (
     <div className="reflect-container">
@@ -71,36 +87,54 @@ export default function ReflectBox({ userId }) {
           Take a moment to write your thoughts and insights for today.
         </p>
       </div>
-      <div className="reflect-glass">
-        <textarea
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          rows={3}
-          placeholder="Write your reflection for today..."
-          className="reflect-textarea"
-        />
-        <button
-          onClick={handleAdd}
-          className="reflect-add-btn"
-        >
-          Add Reflection
-        </button>
-        <div className="reflect-entries">
-          {reflections.length > 0 && reflections.map((r) => (
-            <div key={r.id} className="reflect-entry">
-              <div className="reflect-date">{r.date}</div>
-              <div className="reflect-text">{r.text}</div>
-              <button
-                onClick={() => handleDelete(r.id)}
-                className="reflect-delete-btn"
-                aria-label="Delete reflection"
-              >
-                Delete
-              </button>
+
+      {currentStep === 'writing' ? (
+         <div className="reflect-glass writing-view">
+            <button onClick={handleBackClick} className="back-button">
+                &larr; Back to Reflections
+            </button>
+            <textarea
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                rows={4}
+                placeholder="Write your reflection for today..."
+                className="reflect-textarea"
+                autoFocus
+            />
+            <button
+                onClick={handleAdd}
+                className="reflect-add-btn"
+            >
+                Add Reflection
+            </button>
+         </div>
+      ) : (
+        <div className="reflect-glass list-view">
+            <div className="entries-header">
+                <h3>Your Recent Reflections</h3>
+                <button className="new-entry-btn" onClick={handleNewEntryClick}>
+                    + New Reflection
+                </button>
             </div>
-          ))}
+            <div className="reflect-entries">
+            {reflections.length > 0 ? reflections.map((r) => (
+                <div key={r.id} className="reflect-entry">
+                <div className="reflect-date">{r.date}</div>
+                <div className="reflect-text">{r.text}</div>
+                <button
+                    onClick={() => handleDelete(r.id)}
+                    className="reflect-delete-btn"
+                    aria-label="Delete reflection"
+                >
+                    Delete
+                </button>
+                </div>
+            )) : (
+                <p className="reflect-empty">You have no reflections yet.</p>
+            )}
+            </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

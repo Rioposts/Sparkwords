@@ -225,3 +225,15 @@ textarea {
     font-size: 1.3rem;
   }
 }
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* This ensures that when a component is active, it takes up the necessary space */
+.component-container {
+  width: 100%;
+}

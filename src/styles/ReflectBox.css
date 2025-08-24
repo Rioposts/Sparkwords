@@ -26,7 +26,21 @@
   font-size: 1.2rem;
 }
 
-.reflect-textarea {
+/* Glassmorphism Container */
+.reflect-glass {
+  background: rgba(30, 41, 59, 0.45); /* semi-transparent dark */
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 2.5rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* --- Writing View Specific --- */
+.writing-view .reflect-textarea {
   width: 100%;
   border-radius: 0.75rem;
   padding: 1rem;
@@ -37,14 +51,15 @@
   margin-bottom: 1rem;
   resize: vertical;
   transition: border 0.2s;
+  box-sizing: border-box;
 }
 
-.reflect-textarea:focus {
+.writing-view .reflect-textarea:focus {
   outline: none;
   border: 1.5px solid #8b5cf6;
 }
 
-.reflect-add-btn {
+.writing-view .reflect-add-btn {
   width: 100%;
   padding: 0.7rem 0;
   border-radius: 0.75rem;
@@ -53,24 +68,54 @@
   border: none;
   font-weight: bold;
   font-size: 1.1rem;
-  margin-bottom: 2rem;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
 }
 
-.reflect-add-btn:hover {
+.writing-view .reflect-add-btn:hover {
   background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%);
   transform: translateY(-2px) scale(1.02);
 }
 
+/* --- List View Specific --- */
+.entries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.entries-header h3 {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.new-entry-btn {
+  background: linear-gradient(90deg, #06b6d4 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-entry-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
 .reflect-entries {
-  margin-top: 2rem;
   text-align: center;
 }
 
 .reflect-empty {
-  color: #bbb;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 1.1rem;
+  padding: 2rem 0;
 }
 
 .reflect-entry {
@@ -79,14 +124,15 @@
   border-radius: 1rem;
   padding: 1rem;
   margin-bottom: 1.2rem;
-  box-shadow: 0 2px 8px rgba(60,68,154,.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
   text-align: left;
   position: relative;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .reflect-entry:hover {
-  box-shadow: 0 4px 16px rgba(60,68,154,.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
 }
 
 .reflect-date {
@@ -100,6 +146,7 @@
   font-weight: 500;
   color: #fff;
   word-break: break-word;
+  white-space: pre-wrap; /* To respect line breaks */
 }
 
 .reflect-delete-btn {
@@ -111,29 +158,27 @@
   position: absolute;
   top: 1rem;
   right: 1.2rem;
-  opacity: 0.8;
+  opacity: 0.7;
   transition: color 0.2s, opacity 0.2s;
 }
 
 .reflect-delete-btn:hover {
-  color: #c026d3;
+  color: #f472b6;
   opacity: 1;
 }
-.reflect-glass {
-  background: rgba(30, 41, 59, 0.45); /* semi-transparent dark */
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
-  margin-bottom: 2.5rem;
-  transition: background 0.3s, box-shadow 0.3s;
+
+.back-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem; /* Increased margin */
+  transition: all 0.3s ease;
+  align-self: flex-start; /* Align to the left */
 }
 
-.reflect-glass .reflect-textarea,
-.reflect-glass .reflect-add-btn {
-  width: 100%;
-  box-sizing: border-box;
-  max-width: 100%;
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

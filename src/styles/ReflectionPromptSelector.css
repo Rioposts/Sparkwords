@@ -1,0 +1,67 @@
+.prompt-selector-container {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.prompt-selector-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.prompt-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.2rem;
+}
+
+.prompt-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.13); 
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden; 
+}
+
+.prompt-card-icon {
+  font-size: 2.2rem; 
+  margin-bottom: 1rem;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.prompt-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.prompt-card-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+
+
+.prompt-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  border-color: var(--hover-color);
+  background: var(--hover-color);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+}
+
+
+.prompt-card:hover .prompt-card-icon,
+.prompt-card:hover .prompt-card-title,
+.prompt-card:hover .prompt-card-description {
+  color: #fff;
+}
